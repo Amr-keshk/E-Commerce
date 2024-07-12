@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Grid</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="product-grid">
+        <div class="product" id="product-1">
+            <img src="tshirt.jpg" alt="T-shirt">
+            <h3>T-shirt</h3>
+            <label for="quantity-1">Quantity:</label>
+            <select id="quantity-1" class="quantity-selector" data-product-id="1">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+            <div id="color-options-1" class="color-options"></div>
+        </div>
+    </div>
+
+    <script>
+
+
+
+document.querySelectorAll('.quantity-selector').forEach(selector => {
+    selector.addEventListener('change', function() {
+        const productId = this.getAttribute('data-product-id');
+        const quantity = Number(this.value);
+        const colorOptionsContainer = document.getElementById(`color-options-${productId}`);
+
+        colorOptionsContainer.innerHTML = ''; // Clear existing color options
+
+        for (let i = 0; i < quantity; i++) {
+            const colorSelector = document.createElement('select');
+            colorSelector.classList.add('color-selector');
+            colorSelector.setAttribute('data-product-id', productId);
+            colorSelector.setAttribute('data-item-index', i);
+
+            const colors = ['Red', 'Blue', 'Green', 'Yellow', 'Black'];
+            colors.forEach(color => {
+                const option = document.createElement('option');
+                option.value = color;
+                option.textContent = color;
+                colorSelector.appendChild(option);
+            });
+
+            const label = document.createElement('label');
+            label.textContent = `Color for item ${i + 1}: `;
+            label.appendChild(colorSelector);
+
+            colorOptionsContainer.appendChild(label);
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
